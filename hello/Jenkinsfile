@@ -13,7 +13,7 @@ pipeline {
 		}
 		stage('Finish'){
 			steps {
-				echo 'Pipeline finished executing'
+				echo 'Pipeline finished executing of build ' + currentBuild.displayName
 			}
 		}	
 	}
