@@ -1,0 +1,20 @@
+pipeline {
+	agent any
+	stages {
+		stage('Test') {
+			steps {
+				build 'Hello-App-Test-Run'
+			}
+		}
+		stage('Secondary'){
+			steps {
+				build 'secondary-job'
+			}
+		}
+		stage('Finish'){
+			steps {
+				echo "Pipeline finished executing"
+			}
+		}	
+	}
+}
