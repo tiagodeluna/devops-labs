@@ -10,6 +10,16 @@ pipeline {
 			steps {
 				build "Hello App Test Run"
 			}
+		    post {
+		        always {
+		            junit "**/target/*.xml"
+		        }
+		        failure {
+		            mail to: 'tiagodeluna@hotmail.com', subject: 'The Pipeline failed :(',
+		             body: "Failure executing build ${currentBuild.displayName} of Project ${env.JOB_NAME}",
+		             bcc: '', cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '';
+		        }
+		    }
 		}
 		stage("Secondary"){
 			steps {
@@ -22,14 +32,4 @@ pipeline {
 			}
 		}	
 	}
-    post {
-        always {
-            junit "**/target/*.xml"
-        }
-        failure {
-            mail to: 'tiagodeluna@hotmail.com', subject: 'The Pipeline failed :(',
-             body: "Failure executing build ${currentBuild.displayName} of Project ${env.JOB_NAME}",
-             bcc: '', cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '';
-        }
-    }
 }
