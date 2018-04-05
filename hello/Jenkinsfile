@@ -1,19 +1,32 @@
 pipeline {
 	agent any
+
+	environment {
+		AUTHOR = "Tiago Luna"
+	}
+
 	stages {
-		stage('Test') {
+		stage("Test") {
 			steps {
-				build 'Hello App Test Run'
+				build "Hello App Test Run"
 			}
 		}
-		stage('Secondary'){
+	    post {
+	        always {
+	            junit "**/target/*.xml"
+	        }
+	        failure {
+	            mail to: tiagodeluna@hotmail.com, subject: "The Pipeline failed :("
+	        }
+	    }
+		stage("Secondary"){
 			steps {
-				build 'Secondary Job'
+				build "Secondary Job"
 			}
 		}
-		stage('Finish'){
+		stage("Finish"){
 			steps {
-				echo 'Pipeline finished executing of build ' + currentBuild.displayName
+				echo "Pipeline finished executing build ${currentBuild.displayName} by ${env.AUTHOR}"
 			}
 		}	
 	}
