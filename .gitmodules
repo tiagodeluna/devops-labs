@@ -1,0 +1,3 @@
+[submodule "petclinic-chef"]
+	path = petclinic-chef
+	url = https://github.com/tiagodeluna/petclinic-chef.git
