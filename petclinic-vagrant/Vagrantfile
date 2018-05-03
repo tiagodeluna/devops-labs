@@ -1,0 +1,51 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+	config.vm.box = "ubuntu/trusty64"
+	config.vm.network "forwarded_port", guest: 8080, host: 8082
+	config.vm.boot_timeout = 600
+	config.vm.provider "virtualbox" do |vb|
+		vb.memory = "2048"
+	end
+
+	config.vm.provision "shell", inline: <<-SHELL
+	# Install open-jdk-8
+	add-apt-repository ppa:openjdk-r/ppa -y
+	apt-get update
+	apt-get -y install apache2 openjdk-8-jdk
+	update-alternatives --config java
+	echo "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre" | \
+	tee --append /etc/environment \
+	> /dev/null
+	source /etc/environment
+	export JAVA_HOME
+
+	# Install Tomcat 7
+	apt-get install --show-progress -y default-jre tomcat7 tomcat7-docs
+	tomcat7-admin tomcat7-examples
+	chown tomcat7.tomcat7 /usr/share/tomcat7
+	chmod 0755 /usr/share/tomcat7
+
+	# Configure the port that Tomcat runs on
+	sed -i -e 's/8080/8082/g' /var/lib/tomcat7/conf/server.xml
+
+	# Create a login user with username admin and password admin
+	sed -i "s#</tomcat-users>##g" /etc/tomcat7/tomcat-users.xml; \
+	echo ' <role rolename="manager-gui"/>' >> /etc/tomcat7/tomcat-users.xml; \
+	echo ' <role rolename="manager-script"/>' >> /etc/tomcat7/tomcat-users.xml; \
+	echo ' <role rolename="manager-jmx"/>' >> /etc/tomcat7/tomcat-users.xml; \
+	echo ' <role rolename="manager-status"/>' >> /etc/tomcat7/tomcat-users.xml; \
+	echo ' <role rolename="admin-gui"/>' >> /etc/tomcat7/tomcat-users.xml; \
+	echo ' <role rolename="admin-script"/>' >> /etc/tomcat7/tomcat-users.xml; \
+	echo ' <user username="admin" password="admin" roles="manager-gui, manager-script, manager-jmx, manager-status, admin-gui, admin-script"/>' >> /etc/tomcat7/tomcat-users.xml; \
+	echo '</tomcat-users>' >> /etc/tomcat7/tomcat-users.xml
+
+	# restart tomcat
+	sudo service tomcat7 restart
+
+	# Place spring-petclinic.war into Tomcat's webapps directory
+	# The path to your artifact may need to be altered
+	curl -o /var/lib/tomcat7/webapps/petclinic.war 'http://192.168.50.5:8081/artifactory/webapp/#/artifacts/browse/tree/General/libs-snapshot-local/org/springframework/samples/spring-petclinic/1.0.2-SNAPSHOT/spring-petclinic-1.0.2-20180417.222408-1.war'
+	SHELL
+end
