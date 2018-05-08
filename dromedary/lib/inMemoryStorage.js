@@ -22,6 +22,12 @@ function Constructor() {
       value: 10,
       color:'#000000',
       highlight:'#797979'
+    },
+    purple: {
+      label: 'Purple',
+      value: 10,
+      color:'#a000f0',
+      highlight:'#d949f9'
     }
   };
 
@@ -43,6 +49,12 @@ function Constructor() {
       value: 10,
       color:'#FF9900',
       highlight: '#FFB75E'
+    },
+    gray: {
+      label: 'Gray',
+      value: 10,
+      color:'#999999',
+      highlight: '#a9a9a9'
     }
   };
 
