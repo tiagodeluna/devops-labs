@@ -28,6 +28,12 @@ function Constructor() {
       value: 10,
       color:'#a000f0',
       highlight:'#d949f9'
+    },
+    blue: {
+      label: 'Blue',
+      value: 10,
+      color:'#a0a0f0',
+      highlight:'#d9d9f9'
     }
   };
 

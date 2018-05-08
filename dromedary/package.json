@@ -44,5 +44,8 @@
     "git-rev": "^0.2.1",
     "lambda-express": "^0.1.2",
     "moment": "^2.10.6"
+  },
+  "devDependencies": {
+    "cucumber": "^4.2.1"
   }
 }
