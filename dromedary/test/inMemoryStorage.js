@@ -1,5 +1,6 @@
 var expect    = require("chai").expect;
 var InMemStor = require("../lib/inMemoryStorage.js");
+var assert = require("chai").assert;
 
 var expectedNumberOfItems = 3;
 var expectedProperties = ['value', 'color', 'highlight', 'label'];
@@ -64,6 +65,13 @@ describe("inMemoryStorage", function() {
       var color;
       for (color in this.colorCounts) {
         expect(backend.getCount(color)).to.equal(this.colorCounts[color]+1);
+      }
+    });
+
+    it("doesn't add two to the count per increment", function(){
+      var color;
+      for (color in this.colorCounts) {
+        assert.notEqual(backend.getCount(color), this.colorCounts[color]+2);
       }
     });
   });
