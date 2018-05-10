@@ -1,0 +1,18 @@
+{
+	"config": {
+		"target": "http://localhost:1337",
+		"phases": [
+			{"duration": 10, "arrivalRate": 5, "name": "Low load phase"},
+			{"pause": 5, "name": "Waiting..."},
+			{"duration": 10, "arrivalRate": 50, "name": "High load phase"}
+		]
+	},
+	"scenarios": [
+	{
+		"flow": [
+			{ "get":
+				{"url": "/increment?color=black"}
+			}
+		]
+	}]
+}
