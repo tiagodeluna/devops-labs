@@ -10,6 +10,25 @@ var siteChartStore = {};
 var ddbLastFetch = {};
 var featureToggles = require(__dirname + '/feature-toggles');
 
+//LauchDarkly code
+var LaunchDarkly = require('ldclient-node');
+var ldclient = LaunchDarkly.init('sdk-e9f9a1c3-a828-488a-8ec5-d43691705196');
+
+//LauchDarkly test code
+ldclient.once('ready', function() {
+	ldclient.variation('environment-type', {key: 'ops'}, false, function(err, showFeature) {
+	  console.log("environment-type="+showFeature);
+
+	  if (showFeature === "prod") {
+	      // application code to show the feature
+	      console.log("Production!");
+	  } else {
+	      // the code to run if the feature is off
+	      console.log("Development/Homologation");
+	  }
+	});
+});
+
 module.exports = app;
 
 var ddbPersist = new DDBP();

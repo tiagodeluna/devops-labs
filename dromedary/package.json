@@ -20,8 +20,11 @@
   },
   "homepage": "https://github.com/stelligent/dromedary#readme",
   "dependencies": {
+    "aws-sdk": "^2.2.3",
     "chai": "^3.2.0",
     "del": "^1.2.1",
+    "express": "^4.13.3",
+    "git-rev": "^0.2.1",
     "gulp": "^3.9.0",
     "gulp-bg": "0.0.7",
     "gulp-download": "0.0.1",
@@ -35,15 +38,13 @@
     "gulp-untar": "0.0.4",
     "gulp-util": "^3.0.6",
     "gulp-zip": "^3.2.0",
+    "lambda-express": "^0.1.2",
+    "ldclient-node": "^5.0.0",
     "mocha": "^2.2.5",
+    "moment": "^2.10.6",
     "request-promise": "^2.0.1",
     "run-sequence": "^1.1.2",
-    "yargs": "^3.19.0",
-    "aws-sdk": "^2.2.3",
-    "express": "^4.13.3",
-    "git-rev": "^0.2.1",
-    "lambda-express": "^0.1.2",
-    "moment": "^2.10.6"
+    "yargs": "^3.19.0"
   },
   "devDependencies": {
     "cucumber": "^4.2.1"
