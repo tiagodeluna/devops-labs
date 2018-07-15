@@ -1,8 +1,0 @@
-- hosts: app
-  become: yes
-  become_method: sudo
-
-roles:
-- java
-- tomcat
-- petclinic
