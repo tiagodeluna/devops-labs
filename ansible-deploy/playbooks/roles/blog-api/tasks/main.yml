@@ -1,0 +1,13 @@
+---
+# tasks file for blog-api
+
+#dependencies:
+# - { role: tomcat }
+- name: blog-api
+  get_url:
+    url: 'https://github.com/tiagodeluna/blog-forum-application/raw/master/blog-api/dist/lunaforum-application-0.0.1-SNAPSHOT.war'
+    dest: /var/lib/tomcat7/webapps/lunaforum-blog-api.war
+    owner: tomcat7
+    group: tomcat7
+  notify:
+    - restart tomcat
